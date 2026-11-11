@@ -55,7 +55,7 @@
   const h=(x)=>{const [a,b]=x.split(':').map(Number);return a*60+b;};
   const PADROES = [
     [['09:00','combo',0,'ia','conf'],['10:00','corte',1,'pag','conf'],['10:45','barba',2,'ia','conf'],['11:30','corte',3,'rec','conf'],['13:30','combo',4,'ia','conf'],['15:00','corte',5,'pag','aguarda'],['16:00','corte',8,'ia','conf'],['17:00','realin',6,'ia','conf']],
-    [['09:00','corte',19,'rec','conf'],['09:45','barba',14,'ia','conf'],['10:30','combo',16,'pag','conf'],['11:30','corte',20,'ia','aguarda'],['13:30','corte',8,'ia','conf'],['14:15','hidra',21,'man','conf'],['16:00','combo',17,'ia','conf'],['17:00','corte',15,'pag','conf'],['18:00','corte',9,'ia','aguarda']],
+    [['09:00','corte',19,'rec','conf'],['09:45','barba',14,'ia','conf'],['10:30','combo',16,'pag','conf'],['11:30','corte',20,'ia','aguarda'],['13:30','corte',8,'ia','conf'],['16:00','combo',17,'ia','conf'],['17:00','corte',15,'pag','conf'],['18:00','corte',9,'ia','aguarda']],
     [['09:30','corte',12,'ia','conf'],['10:15','combo',0,'rec','conf'],['11:15','barba',13,'pag','conf'],['14:00','corte',10,'ia','conf'],['14:45','corte',11,'ia','aguarda'],['16:30','combo',18,'man','conf'],['17:30','corte',3,'pag','conf']],
     [['09:00','combo',4,'ia','conf'],['10:00','corte',7,'pag','conf'],['10:45','corte',2,'ia','conf'],['11:30','barba',1,'man','conf'],['13:30','corte',16,'ia','conf'],['14:15','combo',20,'rec','conf'],['15:15','corte',5,'pag','aguarda'],['16:00','realin',14,'ia','conf'],['17:30','corte',19,'ia','conf'],['18:15','barba',21,'pag','conf']]
   ];
@@ -65,7 +65,8 @@
     const d=dataDe(off);
     if(d.getDay()===0 && off!==0) return null; // domingo é folga (se hoje for domingo, mostra mesmo assim)
     const p=PADROES[((off%4)+4)%4];
-    return p.map(([ini,sv,cl,orig,sit])=>({id:off+'-'+h(ini),off,ini:h(ini),sv,cli:cl,orig,sit}));
+    const q = off>=12 ? p.filter((_,i)=>i%4===1) : off>=7 ? p.filter((_,i)=>i%3===0) : p; // mais longe, agenda mais vazia
+    return q.map(([ini,sv,cl,orig,sit])=>({id:off+'-'+h(ini),off,ini:h(ini),sv,cli:cl,orig,sit}));
   }
 
   const CONVERSAS = [

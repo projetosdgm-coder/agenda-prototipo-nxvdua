@@ -302,7 +302,7 @@ function rFechar(t){
   salvar();
   const qual=per==='dia'?'a agenda de':per==='manha'?'a manhã de':'a tarde de';
   let html=`Pronto. Fechei ${qual} <b>${nomeOff(off)}</b>. Ninguém mais consegue marcar nesse período, nem pelo WhatsApp nem pela sua página.`;
-  const fe=[`${cap(nomeOff(off).split(',')[0])} fechado`].concat(S.google?['Google Agenda atualizada']:[]);
+  const fe=[`Agenda de ${nomeOff(off).split(',')[0]} fechada`].concat(S.google?['Google Agenda atualizada']:[]);
   if(!evs.length){
     html+=`<br><br>Não tinha ninguém marcado.`;
     if(off>=5) html+=` Se algum cliente pedir esse dia, eu explico que você está de folga e ofereço o dia antes ou o dia depois.`;
