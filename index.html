@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1B1916">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pente Fino">
+<title>Pente Fino · Protótipo</title>
+<link rel="icon" href="icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icone-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="app">
+  <aside class="lateral" aria-label="Menu">
+    <div class="marca">
+      <span class="marca-ic" aria-hidden="true"></span>
+      <div><b>Pente Fino</b><small>agenda do barbeiro</small></div>
+    </div>
+    <nav class="menu" id="menu-lateral"></nav>
+    <div class="lateral-pe">
+      <div class="perfil"><span class="av">LU</span><div><b>Lucas</b><small>Barbeiro · cadeira 3</small></div></div>
+      <p class="aviso-proto">Protótipo. Todos os dados são de exemplo.</p>
+    </div>
+  </aside>
+
+  <header class="topo-mob">
+    <div class="marca mini"><span class="marca-ic" aria-hidden="true"></span><b id="titulo-mob">Pente Fino</b></div>
+    <span class="selo-proto">protótipo</span>
+    <span class="av">LU</span>
+  </header>
+
+  <main id="tela" tabindex="-1"></main>
+
+  <nav class="barra-mob" id="barra-mob" aria-label="Navegação"></nav>
+</div>
+
+<div class="fundo-folha" id="fundo-folha" hidden></div>
+<section class="folha" id="folha" role="dialog" aria-modal="true" hidden></section>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="dados.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
