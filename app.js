@@ -200,11 +200,11 @@ function cartaoZap(){
       <div class="zap-cab"><div class="zap-logo">${ZAP}</div><div style="flex:1"><h2>WhatsApp conectado</h2><p class="ds">A IA atende no seu número, no seu jeito.</p></div><span class="pill ok"><span class="bol"></span>ativo</span></div>
       <div class="conectado"><span class="pulso"></span><div style="flex:1;font-size:14px"><b>${numMascara()}</b><br><span class="mudo" style="font-size:12.5px">Seu WhatsApp continua no seu celular, igual antes.</span></div></div>
       <div class="numeros"><div><b>14</b><small>conversas hoje</small></div><div><b>5</b><small>horários marcados pela IA</small></div><div><b>1</b><small>passou para você</small></div></div>
-      <h3 style="margin-top:16px">Como a IA atende</h3>
+      <details class="alt"><summary>${ic('cog')} Como a IA atende: <b style="color:var(--texto)">${({aprender:'só aprender',sugerir:'sugerir e eu aprovo',sozinha:'responder sozinha'})[S.modoIA]}</b></summary>
       <div class="modos">${modos.map(([k,n,d])=>`<button class="modo ${S.modoIA===k?'ativo':''}" data-a="modo" data-k="${k}"><span class="r"></span><span><b>${n}</b><small>${d}</small></span></button>`).join('')}</div>
       ${S.modoIA==='aprender'?`<div class="progresso"><i style="width:62%"></i></div><p class="mudo" style="font-size:12.5px;margin-top:6px">Aprendendo: 312 conversas lidas. Já pegou seus jeitos: "fala, meu querido", "tamo junto", "fechou".</p>`:''}
       <div class="dica">${ic('info')}<span>Abra o WhatsApp no celular pelo menos <b>uma vez a cada 14 dias</b>, senão o WhatsApp desconecta os aparelhos sozinho.</span></div>
-      <div style="margin-top:12px;text-align:right"><button class="btn fantasma peq" data-a="wa-sair">Desconectar</button></div>
+      <div style="margin-top:12px;text-align:right"><button class="btn fantasma peq" data-a="wa-sair">Desconectar</button></div></details>
     </div>`;
   }
   if(S.wa==='conectando'){
@@ -643,7 +643,7 @@ function thread(i){
     if(m.sep) return `<div class="dia-sep">${m.sep}</div>`;
     if(m.nota) return `<div class="nota-ia">${ic('bot')}<span>${m.nota}</span></div>`;
     const quem=m.de==='ia'?`<span class="quem">IA no seu jeito${m.auto?' · '+m.auto.replace('Mensagem automática: ','automática: '):''}</span>`:m.de==='luc'?'<span class="quem">Você</span>':'';
-    return `<div class="wb ${m.de}">${quem}${esc(m.t)}<small>${m.h}${m.de!=='cli'?' ✓✓':''}</small></div>`;
+    return `<div class="wb ${m.de==='cli'?'cl':m.de}">${quem}${esc(m.t)}<small>${m.h}${m.de!=='cli'?' ✓✓':''}</small></div>`;
   }).join('');
   return `<div class="wa"><div class="wa-cab"><span class="av">${cl.ini}</span><div style="flex:1"><b>${cl.nome}</b><small>${c.tag==='luc'?'Você assumiu esta conversa':c.tag==='voce'?'Esperando você responder':'A IA está atendendo'}</small></div>${c.tag==='voce'?'<span class="pill ruim">precisa de você</span>':c.tag==='luc'?'<span class="pill">você</span>':'<span class="pill ok">IA</span>'}</div>
     <div class="wa-corpo" id="wa-corpo">${corpo}</div>
@@ -683,14 +683,15 @@ function pubHTML(){
 }
 function paginaPagina(){
   return `<div class="cab"><div><span class="kick">Minha página</span><h1>Seu link de agendamento</h1><p>Manda esse link para o cliente ou põe na bio do Instagram. Ele marca sozinho, sem precisar te chamar.</p></div></div>
-  <div class="pub-layout"><div class="moldura">${pubHTML()}</div>
+  <div class="pub-layout">
     <div>
       <div class="cartao escuro"><h2>${ic('link')} Seu link</h2><div class="link-box" style="background:var(--cafe3)"><span style="color:#fff">agendar.exemplo/lucas</span><button class="btn ouro peq" data-a="copiar-link">${ic('copy')} Copiar</button></div>
         <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><a class="btn claro peq" href="#/agendar">${ic('cel')} Abrir como cliente</a><button class="btn claro peq" data-a="qr-link">${ic('qr')} QR Code para a bancada</button><button class="btn claro peq" data-a="insta">${ic('share')} Pôr na bio</button></div>
         <p class="ds" style="margin-top:12px">Link de exemplo. No sistema de verdade, você escolhe o endereço.</p></div>
       <div class="cartao"><h2>O que o cliente vê</h2><ol class="passos"><li>Escolhe o serviço, com preço e tempo.</li><li>Escolhe o dia e um <b>horário livre de verdade</b> (a mesma agenda da IA e do Google).</li><li>Coloca nome e WhatsApp e confirma.</li><li>Recebe a confirmação e o lembrete 2h antes <b>no WhatsApp</b>.</li><li>Pode salvar a página na tela de início, como um app.</li></ol></div>
       <div class="cartao"><h2>Esta semana</h2><div class="numeros"><div><b>46</b><small>visitas na página</small></div><div><b>9</b><small>marcaram sozinhos</small></div><div><b>0</b><small>mensagens suas</small></div></div><p class="ds" style="margin-top:10px">Números de exemplo.</p></div>
-    </div></div>`;
+    </div>
+    <div><span class="kick so-mob" style="margin-top:6px">Como o cliente vê</span><div class="moldura">${pubHTML()}</div></div></div>`;
 }
 function paginaFinanceiro(){
   const sem=[['S1',1890],['S2',2140],['S3',2010],['Atual',1405]], mx=2200;
@@ -778,7 +779,7 @@ document.addEventListener('click',ev=>{
     case 'copiar-codigo': copiar(S.codigo,'Código copiado. Agora abra o WhatsApp.'); break;
     case 'wa-ok': S.wa='conectando'; render(false); setTimeout(()=>{S.wa='on';salvar();render(false);toast('WhatsApp conectado!');},1600); break;
     case 'wa-sair': S.wa='off'; salvar(); render(false); toast('WhatsApp desconectado'); break;
-    case 'modo': S.modoIA=d.k; salvar(); render(false); break;
+    case 'modo': S.modoIA=d.k; salvar(); render(false); { const dt=document.querySelector('.col-zap details'); if(dt) dt.open=true; } break;
     case 'sug': enviar(d.texto); break;
     case 'mic': toast('No app de verdade você manda um áudio e a IA entende.'); break;
     case 'chat-acao': acaoChat(b); break;
