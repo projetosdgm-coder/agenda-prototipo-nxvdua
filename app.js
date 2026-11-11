@@ -666,7 +666,8 @@ function paginaConversas(){
    ============================================================ */
 function pubHTML(){
   const p=T.pub;
-  if(p.off===null){for(let o=0;o<10;o++){if(!fechado(o)&&livresDo(o).length){p.off=o;break;}}}
+  const cabe=(o,dur)=>{const l=livresDo(o);let n=0;for(let m=INI;m+dur<=FIM;m+=30){if(l.some(x=>m>=x.ini&&m+dur<=x.fim))n++;}return n;};
+  if(p.off===null){for(let o=0;o<10;o++){if(!fechado(o)&&cabe(o,SV[p.sv].dur)){p.off=o;break;}}}
   if(p.ok){
     return `<div class="pub"><div class="pub-hero"><div class="pub-foto">L</div><h2>Lucas</h2><p>Barbeiro</p></div><div class="pub-ok"><div class="ok-ic">${ic('check')}</div><h2 style="font-size:22px">Horário marcado!</h2><p class="mudo" style="margin-top:6px">${SV[p.sv].nome}, ${nomeOffLongo(p.off)} às ${hh(p.hora)}.</p><p style="margin-top:14px;font-size:14px">Você vai receber a confirmação no WhatsApp. Para remarcar, é só responder a mensagem.</p><button class="btn claro" style="margin-top:18px" data-a="pub-novo">Marcar outro horário</button></div></div>`;
   }
@@ -676,7 +677,7 @@ function pubHTML(){
   return `<div class="pub"><div class="pub-hero"><div class="pub-foto">L</div><h2>Lucas</h2><p>Barbeiro · atendo na cadeira 3</p><div class="tags"><span>Degradê</span><span>Barba</span><span>Navalhado</span><span>Realinhamento</span></div></div>
     <div class="pub-sec"><h3>1. Serviço</h3>${Object.entries(SV).slice(0,6).map(([k,s])=>`<button class="serv ${p.sv===k?'ativo':''}" data-a="pub-sv" data-k="${k}"><span class="bol" style="background:${s.cor}"></span><span><b>${s.nome}</b><small>${s.dur} min</small></span><span class="pr">${brl(s.preco)}</span></button>`).join('')}</div>
     <div class="pub-sec"><h3>2. Dia</h3><div class="dias">${dias}</div></div>
-    <div class="pub-sec"><h3>3. Horário</h3><div class="horarios">${hs}</div><p class="mudo" style="font-size:12px;margin-top:8px">Só aparecem os horários livres de verdade.</p></div>
+    <div class="pub-sec"><h3>3. Horário</h3>${cabe(p.off,dur)?'':'<p class="aviso" style="margin:0 0 10px">Nenhum horário livre nesse dia para esse serviço. Escolha outro dia.</p>'}<div class="horarios">${hs}</div><p class="mudo" style="font-size:12px;margin-top:8px">Só aparecem os horários livres de verdade.</p></div>
     <div class="pub-sec"><h3>4. Seus dados</h3><label class="campo" style="margin-top:0"><span>Nome</span><input id="pub-nome" placeholder="Seu nome" value="${esc(p.nome)}"></label><label class="campo"><span>WhatsApp</span><input type="tel" inputmode="tel" placeholder="(11) 9 0000-0000"></label></div>
     <div class="pub-sec" style="padding-bottom:20px"><button class="btn ouro cheio" data-a="pub-ok" ${p.hora===null?'disabled style="opacity:.5"':''}>${p.hora===null?'Escolha um horário':`Confirmar ${nomeOff(p.off).split(',')[0]} às ${hh(p.hora)}`}</button>
     <p class="mudo" style="font-size:11.5px;text-align:center;margin-top:12px">Dica: salve esta página na tela de início para marcar mais rápido.</p></div></div>`;
